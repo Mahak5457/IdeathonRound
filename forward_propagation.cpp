@@ -5,7 +5,6 @@ using namespace std;
 
 void forwardpropagation(string node, map<string, int> value, map<string, vector<vector<string>>> forward, map<string, int> uncont, vector<map<string, int>> &final)
 {
-    
     if (node == "Z")
     {
         final.push_back(value);
@@ -65,15 +64,29 @@ void forwardpropagation(string node, map<string, int> value, map<string, vector<
                     {
                         if (point[0] == "~" || value.find(point[2]) != value.end())
                         {
-                            it2ass.push_back(point[1]);
-                            if (point[0] == "~")
-                                value[point[1]] = 1 ^ value[it[2]];
-                            else if (point[0] == "&")
-                                value[point[1]] = value[it[2]] & value[point[2]];
-                            else if (point[0] == "|")
-                                value[point[1]] = value[it[2]] | value[point[2]];
+                            if (value.find(point[1]) != value.end())
+                            {
+                                if (point[0] == "~" && value[point[1]] != 1 ^ value[it[2]])
+                                    return;
+                                else if (point[0] == "&" && value[point[1]] != value[it[2]] & value[point[2]])
+                                    return;
+                                else if (point[0] == "|" && value[point[1]] != value[it[2]] | value[point[2]])
+                                    return;
+                                else if (point[0] == "^" && value[point[1]] != value[it[2]] ^ value[point[2]])
+                                    return;
+                            }
                             else
-                                value[point[1]] = value[it[2]] ^ value[point[2]];
+                            {
+                                it2ass.push_back(point[1]);
+                                if (point[0] == "~")
+                                    value[point[1]] = 1 ^ value[it[2]];
+                                else if (point[0] == "&")
+                                    value[point[1]] = value[it[2]] & value[point[2]];
+                                else if (point[0] == "|")
+                                    value[point[1]] = value[it[2]] | value[point[2]];
+                                else
+                                    value[point[1]] = value[it[2]] ^ value[point[2]];
+                            }
                         }
                     }
                     forwardpropagation(it[1], value, forward, uncont, final);
@@ -83,22 +96,50 @@ void forwardpropagation(string node, map<string, int> value, map<string, vector<
                     node1 = true;
                     node2 = true;
                     value[it[2]] = 1;
+                    bool valposs = true;
                     for (auto point : forward[it[2]])
                     {
                         if (point[0] == "~" || value.find(point[2]) != value.end())
                         {
-                            it2ass.push_back(point[1]);
-                            if (point[0] == "~")
-                                value[point[1]] = 1 ^ value[it[2]];
-                            else if (point[0] == "&")
-                                value[point[1]] = value[it[2]] & value[point[2]];
-                            else if (point[0] == "|")
-                                value[point[1]] = value[it[2]] | value[point[2]];
+                            if (value.find(point[1]) != value.end())
+                            {
+                                if (point[0] == "~" && value[point[1]] != 1 ^ value[it[2]])
+                                    {
+                                        valposs = false;
+                                        break;
+                                    }
+                                else if (point[0] == "&" && value[point[1]] != value[it[2]] & value[point[2]])
+                                     {
+                                        valposs = false;
+                                        break;
+                                    }
+                                else if (point[0] == "|" && value[point[1]] != value[it[2]] | value[point[2]])
+                                     {
+                                        valposs = false;
+                                        break;
+                                    }
+                                else if (point[0] == "^" && value[point[1]] != value[it[2]] ^ value[point[2]])
+                                     {
+                                        valposs = false;
+                                        break;
+                                    }
+                            }
                             else
-                                value[point[1]] = value[it[2]] ^ value[point[2]];
+                            {
+                                it2ass.push_back(point[1]);
+                                if (point[0] == "~")
+                                    value[point[1]] = 1 ^ value[it[2]];
+                                else if (point[0] == "&")
+                                    value[point[1]] = value[it[2]] & value[point[2]];
+                                else if (point[0] == "|")
+                                    value[point[1]] = value[it[2]] | value[point[2]];
+                                else
+                                    value[point[1]] = value[it[2]] ^ value[point[2]];
+                            }
                         }
                     }
                     value[it[1]] = 1 ^ value[node];
+                    if(valposs)
                     forwardpropagation(it[1], value, forward, uncont, final);
                     for (auto val : it2ass)
                     {
@@ -106,22 +147,50 @@ void forwardpropagation(string node, map<string, int> value, map<string, vector<
                     }
                     it2ass.clear();
                     value[it[2]] = 0;
+                    valposs = true;
                     for (auto point : forward[it[2]])
                     {
                         if (point[0] == "~" || value.find(point[2]) != value.end())
                         {
-                            it2ass.push_back(point[1]);
-                            if (point[0] == "~")
-                                value[point[1]] = 1 ^ value[it[2]];
-                            else if (point[0] == "&")
-                                value[point[1]] = value[it[2]] & value[point[2]];
-                            else if (point[0] == "|")
-                                value[point[1]] = value[it[2]] | value[point[2]];
+                            if (value.find(point[1]) != value.end())
+                            {
+                                if (point[0] == "~" && value[point[1]] != 1 ^ value[it[2]])
+                                     {
+                                        valposs = false;
+                                        break;
+                                    }
+                                else if (point[0] == "&" && value[point[1]] != value[it[2]] & value[point[2]])
+                                     {
+                                        valposs = false;
+                                        break;
+                                    }
+                                else if (point[0] == "|" && value[point[1]] != value[it[2]] | value[point[2]])
+                                     {
+                                        valposs = false;
+                                        break;
+                                    }
+                                else if (point[0] == "^" && value[point[1]] != value[it[2]] ^ value[point[2]])
+                                     {
+                                        valposs = false;
+                                        break;
+                                    }
+                            }
                             else
-                                value[point[1]] = value[it[2]] ^ value[point[2]];
+                            {
+                                it2ass.push_back(point[1]);
+                                if (point[0] == "~")
+                                    value[point[1]] = 1 ^ value[it[2]];
+                                else if (point[0] == "&")
+                                    value[point[1]] = value[it[2]] & value[point[2]];
+                                else if (point[0] == "|")
+                                    value[point[1]] = value[it[2]] | value[point[2]];
+                                else
+                                    value[point[1]] = value[it[2]] ^ value[point[2]];
+                            }
                         }
                     }
                     value[it[1]] = value[node];
+                    if(valposs)
                     forwardpropagation(it[1], value, forward, uncont, final);
                 }
             }
@@ -155,15 +224,29 @@ void forwardpropagation(string node, map<string, int> value, map<string, vector<
                 {
                     if (point[0] == "~" || value.find(point[2]) != value.end())
                     {
-                        it2ass.push_back(point[1]);
-                        if (point[0] == "~")
-                            value[point[1]] = 1 ^ value[it[2]];
-                        else if (point[0] == "&")
-                            value[point[1]] = value[it[2]] & value[point[2]];
-                        else if (point[0] == "|")
-                            value[point[1]] = value[it[2]] | value[point[2]];
+                        if (value.find(point[1]) != value.end())
+                        {
+                            if (point[0] == "~" && value[point[1]] != 1 ^ value[it[2]])
+                                return;
+                            else if (point[0] == "&" && value[point[1]] != value[it[2]] & value[point[2]])
+                                return;
+                            else if (point[0] == "|" && value[point[1]] != value[it[2]] | value[point[2]])
+                                return;
+                            else if (point[0] == "^" && value[point[1]] != value[it[2]] ^ value[point[2]])
+                                return;
+                        }
                         else
-                            value[point[1]] = value[it[2]] ^ value[point[2]];
+                        {
+                            it2ass.push_back(point[1]);
+                            if (point[0] == "~")
+                                value[point[1]] = 1 ^ value[it[2]];
+                            else if (point[0] == "&")
+                                value[point[1]] = value[it[2]] & value[point[2]];
+                            else if (point[0] == "|")
+                                value[point[1]] = value[it[2]] | value[point[2]];
+                            else
+                                value[point[1]] = value[it[2]] ^ value[point[2]];
+                        }
                     }
                 }
             }

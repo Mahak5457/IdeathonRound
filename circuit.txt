@@ -1,0 +1,5 @@
+e = A & B
+f = C | D
+h = ~ e
+g = ~ f
+Z = h ^ g

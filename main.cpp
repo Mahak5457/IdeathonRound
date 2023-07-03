@@ -65,7 +65,7 @@ int main()
     getInput(forward, backward, nodeNumber);
     // cout << nodeNumber << endl;
     //priting both the populated map
-    printInput(forward, backward);
+    // printInput(forward, backward);
     pair<string, int> fault;
     //asking for the fault site and fault type(in the given format) from the user.
     fault = getFault();
@@ -91,11 +91,11 @@ int main()
     for (auto it : final)
     {
         //printing the feasible combinations resulted during forward propagation
-        cout << endl;
-        for (auto it1 : it)
-        {
-            cout << it1.first << " : " << it1.second << endl;
-        }
+        // cout << endl;
+        // for (auto it1 : it)
+        // {
+        //     cout << it1.first << " : " << it1.second << endl;
+        // }
 
         //justifuing each of the comination one by one
         //if any of the combination gets justified resulting in a valid test vector then 
@@ -114,13 +114,13 @@ int main()
                     if (it.find(backward[curr][1]) == it.end())
                     {
                         q.push(curr);
-                        cout << curr << endl;
+                        // cout << curr << endl;
                     }
                 }
                 else if ((it.find(backward[curr][1]) == it.end() || it.find(backward[curr][2]) == it.end()))
                 {
                     q.push(curr);
-                    cout << curr << endl;
+                    // cout << curr << endl;
                 }
             }
         }

@@ -9,6 +9,7 @@ pair<string, int> getFault()
     string faulttypedialog;
     string faultsite;
     int faulttype;
+    cout << "Enter the fault location and type:" << endl;
     getline(cin, faultsitedialog);
     getline(cin, faulttypedialog);
     stringstream ss(faultsitedialog);

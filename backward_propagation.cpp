@@ -24,7 +24,7 @@ void backwardPropagation(queue<string> q, map<string, int> it, map<string, vecto
         int currval = it[curr];
         string inp1 = backward[curr][1];
         string bitoperat = backward[curr][0];
-        cout << curr << " " << currval << " " << bitoperat << " " << inp1 << endl;
+        // cout << curr << " " << currval << " " << bitoperat << " " << inp1 << endl;
         if (backward[curr][0] == "~")
         {
             if (backward.find(inp1) != backward.end())
@@ -52,7 +52,7 @@ void backwardPropagation(queue<string> q, map<string, int> it, map<string, vecto
         else
         {
             string inp2 = backward[curr][2];
-            cout << inp2 << endl;
+            // cout << inp2 << endl;
             if (backward.find(inp1) != backward.end())
             {
                 if (backward[inp1][0] == "~")

@@ -5,6 +5,7 @@ using namespace std;
 
 void forwardpropagation(string node, map<string, int> value, map<string, vector<vector<string>>> forward, map<string, int> uncont, vector<map<string, int>> &final)
 {
+    
     if (node == "Z")
     {
         final.push_back(value);
